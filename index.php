@@ -1,6 +1,7 @@
 <?php
 include "connection.php";
 $result = mysqli_query($conn, "SELECT * FROM movies");
+$added = false;
 
 if (isset($_POST['add'])) {
     $title = $_POST['title'];
@@ -11,8 +12,7 @@ if (isset($_POST['add'])) {
 
     mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster, rating) 
     VALUES ('$title', '$year', '$genre', '$poster', '$rating')");
-
-    header("Location: index.php");
+    $added = true;
 }
 
 ?>
@@ -103,6 +103,17 @@ Swal.fire({
     text: "Movie has been removed.",
     icon: "success",
     confirmButtonColor: "#ff3c3c"
+});
+</script>
+<?php endif; ?>
+
+<?php if ($added): ?>
+<script> 
+Swal.fire({
+    title: "Added!",
+    text: "Movie has been added.",
+    icon: "success",
+    confirmButtonColor: "#3cba54"
 });
 </script>
 <?php endif; ?>
