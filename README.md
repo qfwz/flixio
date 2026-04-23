@@ -4,6 +4,7 @@ Simple movie web app built with PHP & MySQL
 ## Features
 - Add movie
 - Edit movie
+- Delete movie
 - Detail page
 - Modal popup
 
