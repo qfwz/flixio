@@ -72,7 +72,10 @@ $movie = mysqli_fetch_assoc($result);
 
             <p class="description"><?= $movie['description'] ?></p>
 
-            <button class="edit-btn" onclick="openEditModal()">Edit details</button>
+            <div class="action-group">
+                <button class="edit-btn" onclick="openEditModal()">Edit details</button>
+                <button class="delete-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">Delete this movie</button>
+            </div>
         </div>
     </div>
 
@@ -124,7 +127,7 @@ $movie = mysqli_fetch_assoc($result);
     </div>
 </div>
 
-<!-- buat buka editor -->
+<!-- action scripts -->
 <script>
 function openEditModal() {
     document.getElementById("editModal").style.display = "block";
@@ -133,9 +136,26 @@ function openEditModal() {
 function closeEditModal() {
     document.getElementById("editModal").style.display = "none";
 }
+
+function confirmDelete(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This movie will be permanently deleted",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#ff3c3c",
+        cancelButtonColor: "#555",
+        confirmButtonText: "Yes"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "delete.php?id=" + id;
+        }
+    });
+}
+
 </script>
 
-<!-- Swal Trigger -->
+<!-- Swal scripts -->
 <?php if ($updated): ?>
 <script>
 Swal.fire({
@@ -144,6 +164,7 @@ Swal.fire({
     icon: "success",
     confirmButtonColor: "#ff3c3c"
 });
+
 </script>
 <?php endif; ?>
 

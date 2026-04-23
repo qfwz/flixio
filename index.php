@@ -23,6 +23,8 @@ if (isset($_POST['add'])) {
 <head>
     <link rel="stylesheet" href="style.css">
     <title>Flixio</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <a href="#" class="add-btn" onclick="openModal()">
@@ -93,6 +95,17 @@ function closeModal() {
 
 <?php endwhile; ?>
 </div>
+
+<?php if (isset($_GET['deleted'])): ?>
+<script>
+Swal.fire({
+    title: "Deleted!",
+    text: "Movie has been removed.",
+    icon: "success",
+    confirmButtonColor: "#ff3c3c"
+});
+</script>
+<?php endif; ?>
 
 </body>
 </html>

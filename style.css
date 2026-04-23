@@ -268,6 +268,14 @@ h1 {
     background: #ff1f1f;
 }
 
+/* ACTION GROUP*/
+.action-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    width: max-content;
+    flex-direction: column;
+}
 
 /* MODAL EDITOR */
 .edit-btn {
@@ -277,7 +285,7 @@ h1 {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    width: max-content;
+    width:auto;
 }
 
 .edit-btn:hover {
@@ -328,4 +336,19 @@ h1 {
 .form-group input,
 .form-group textarea {
     flex: 1;
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #ff3c3c;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: auto;
+}
+
+.delete-btn:hover {
+    background: #ff1f1f;
 }

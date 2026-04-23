@@ -1,5 +1,4 @@
-# Flixio 🎬
-
+# Flixio
 Simple movie web app built with PHP & MySQL
 
 ## Features
