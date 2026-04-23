@@ -1,19 +1,21 @@
 <?php
 include "connection.php";
 $result = mysqli_query($conn, "SELECT * FROM movies");
-$added = false;
 
 if (isset($_POST['add'])) {
-    $title = $_POST['title'];
-    $year = $_POST['year'];
-    $genre = $_POST['genre'];
-    $poster = $_POST['poster'];
-    $rating = $_POST['rating'];
+    $title = mysqli_real_escape_string($conn, $_POST['title']);
+    $year = mysqli_real_escape_string($conn, $_POST['year']);
+    $genre = mysqli_real_escape_string($conn, $_POST['genre']);
+    $poster = mysqli_real_escape_string($conn, $_POST['poster']);
+    $rating = mysqli_real_escape_string($conn, $_POST['rating']);
 
     mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster, rating) 
     VALUES ('$title', '$year', '$genre', '$poster', '$rating')");
-    $added = true;
+    header("Location: index.php?added=1");
+    exit;
 }
+
+
 
 ?>
 
@@ -27,12 +29,6 @@ if (isset($_POST['add'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<a href="#" class="add-btn" onclick="openModal()">
-    <svg viewBox="0 0 24 24" width="30" height="30">
-        <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round"/>
-    </svg>
-    <span>Add Movie </span>
-</a>
 
 <div id="modal" class="modal">
     <div class="modal-content">
@@ -42,7 +38,7 @@ if (isset($_POST['add'])) {
         
         <form method="POST" action="">
             <input type="text" name="title" placeholder="Title" required><br>
-            <input type="number" name="year" placeholder="Year" required><br>
+            <input type="number" name="year" placeholder="Year" min="1901" max="2155" required><br>
             <input type="text" name="genre" placeholder="Genre" required><br>
             <input type="text" name="poster" placeholder="Poster URL" required><br>
             <input type="number" step="0.1" name="rating" placeholder="Rating" required><br><br>
@@ -63,6 +59,14 @@ function closeModal() {
 </script>
 
 <body>
+
+<a href="#" class="add-btn" onclick="openModal()">
+    <svg viewBox="0 0 24 24" width="30" height="30">
+        <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span>Add Movie </span>
+</a>
+
 
 <header class="header">
     <div class="logo">Flixio</div>
@@ -107,8 +111,9 @@ Swal.fire({
 </script>
 <?php endif; ?>
 
-<?php if ($added): ?>
-<script> 
+<?php if (isset($_GET['added'])): ?>
+<script>
+    closeModal();
 Swal.fire({
     title: "Added!",
     text: "Movie has been added.",
