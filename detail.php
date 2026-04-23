@@ -37,7 +37,6 @@ $movie = mysqli_fetch_assoc($result);
     <link rel="stylesheet" href="style.css">
     <title><?= $movie['title'] ?> - Flixio</title>
 
-    <!-- Swal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
