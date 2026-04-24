@@ -43,7 +43,9 @@ $movie = mysqli_fetch_assoc($result);
 <body>
 
 <header class="header">
-    <div class="logo">Flixio</div>
+    <div class="logo">
+        <span class="flix">Flix</span><span class="io">io</span>
+    </div>
 
     <nav class="nav">
         <a href="index.php">Home</a>
