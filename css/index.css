@@ -1,0 +1,36 @@
+/* ADDING BUTTON STYLES */
+.add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+
+    width: max-content;
+    height: 60px;
+    border-radius: 20px;
+
+    background: #ff3c3c;
+    color: white;
+    font-size: 18px;
+    font-style: bold;
+    text-align: center;
+    line-height: 60px;
+
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: 0.3s;
+
+    padding-left: 24px;
+    padding-right: 24px;
+
+    z-index: 1000;
+
+}
+
+.add-btn:hover {
+    background: #ff1f1f;
+    transform: scale(1.1);
+}

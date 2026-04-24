@@ -1,0 +1,52 @@
+/* DETAIL PAGE STYLES */
+
+.detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-card {
+    display: flex;
+    gap: 30px;
+}
+
+.detail-card .detail-poster img {
+    width: 200px !important;
+    height: 300px !important;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-info h1 {
+    color: #ffeb52;
+    margin-bottom: 10px;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.detail-info p {
+    margin-bottom: 5px;
+}
+
+.detail-year {
+    font-size: 24px;
+    color: #aaa;
+    margin-left: 12px;
+}
+
+.description {
+    margin-top: 20px;
+    line-height: 1.5;
+    color: #ddd;
+}

@@ -34,7 +34,8 @@ $movie = mysqli_fetch_assoc($result);
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/detail.css">
     <title><?= $movie['title'] ?> - Flixio</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -74,8 +75,8 @@ $movie = mysqli_fetch_assoc($result);
             <p class="description"><?= $movie['description'] ?></p>
 
             <div class="action-group">
-                <button class="edit-btn" onclick="openEditModal()">Edit details</button>
-                <button class="delete-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">Delete this movie</button>
+                <button class="yellow-btn" onclick="openEditModal()">Edit details</button>
+                <button class="red-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">Delete this movie</button>
             </div>
         </div>
     </div>

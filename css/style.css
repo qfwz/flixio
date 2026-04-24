@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Patua+One&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #111;
+    padding: 15px 30px;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Patua One', cursive;
+}
+
+.flix {
+    color: white;
+}
+
+.io {
+    color: #ffeb52;
+}
+
+.nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    color: #ff3c3c;
+}
+
+body {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #0b002d;
+    color: #969696;
+    padding: 20px;
+    margin-top: 80px;
+}
+
+
+/* INDEX PAGE STYLES */
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #ffeb52;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.film-card {
+    width: 200px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.film-card,
+.film-card:visited,
+.film-card:hover,
+.film-card:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.poster {
+    width: 200px;
+    height: 300px;
+    background-color: #333;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.poster:hover {
+    transform: scale(1.05);
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.judul {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ddd;
+    text-align: center;
+}
+
+.tahun {
+    font-size: 12px;
+    color: #aaa;
+    margin-left: 2px;
+}
+
+.genre {
+    font-size: 12px;
+    color: #bbb;
+}
+
+
+
+/* MODAL (ADD & EDIT) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+.modal-content {
+    background: #1c1c1c;
+    margin: 10% auto;
+    padding: 20px;
+    width: 600px;
+    border-radius: 10px;
+    color: white;
+}
+
+/* FORM IN MODAL */
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal label {
+    color: #ccc;
+    font-size: 12px;
+}
+
+.modal input,
+.modal textarea {
+    width: 100%;
+    padding: 8px;
+    background: #333;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.modal textarea {
+    min-height: 100px;
+    resize: none;
+}
+
+.modal input:focus,
+.modal textarea:focus {
+    outline: none;
+}
+
+/* BUTTON IN MODAL */
+.modal button {
+    padding: 10px;
+    background: #ff3c3c;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.modal button:hover {
+    background: #ff1f1f;
+}
+
+/* CLOSE BTN */
+.close {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+.back-btn {
+    display: inline-block;
+    /* margin-top: auto; */
+    padding: 10px 20px;
+    background: #ff3c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    width: max-content;
+    margin-top: 20px;
+}
+
+
+.back-btn:hover {
+    background: #ff1f1f;
+}
+
+/* ACTION GROUPING (EDIT & DELETE) */
+.action-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    width: max-content;
+    flex-direction: column;
+}
+
+/* RED BUTTON */
+.red-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #ff3c3c;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    width: auto;
+    color: white;
+}
+
+.red-btn:hover {
+    background: #ff1f1f;
+}
+
+/* YELLOW BUTTON */
+.yellow-btn { 
+    margin-top: 10px; padding: 10px 20px;
+    background: #ffeb52;
+    border: none; cursor: pointer;
+    border-radius: 5px; width:auto; }
+    
+.yellow-btn:hover {
+    background: #ffd000; 
+}

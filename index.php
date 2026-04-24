@@ -23,14 +23,15 @@ if (isset($_POST['add'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
     <title>Flixio</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 
-<div id="modal" class="modal">
+<div id="addModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
         
@@ -50,11 +51,11 @@ if (isset($_POST['add'])) {
 
 <script>
 function openModal() {
-    document.getElementById("modal").style.display = "block";
+    document.getElementById("addModal").style.display = "block";
 }
 
 function closeModal() {
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("addModal").style.display = "none";
 }
 </script>
 
@@ -69,7 +70,9 @@ function closeModal() {
 
 
 <header class="header">
-    <div class="logo">Flixio</div>
+    <div class="logo">
+        <span class="flix">Flix</span><span class="io">io</span>
+    </div>
 
     <nav class="nav">
         <a href="#">Home</a>
