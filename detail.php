@@ -11,7 +11,6 @@ if (isset($_POST['update'])) {
     $year = mysqli_real_escape_string($conn, $_POST['year']);
     $genre = mysqli_real_escape_string($conn, $_POST['genre']);
     $poster = mysqli_real_escape_string($conn, $_POST['poster']);
-    $rating = mysqli_real_escape_string($conn, $_POST['rating']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
 
     mysqli_query($conn, "UPDATE movies SET 
@@ -19,7 +18,6 @@ if (isset($_POST['update'])) {
         year='$year',
         genre='$genre',
         poster='$poster',
-        rating='$rating',
         description='$description'
         WHERE id=$id
     ");
@@ -43,7 +41,13 @@ if (isset($_POST['submit_review'])) {
 }
 
 /* ambil data terbaru*/
-$result = mysqli_query($conn, "SELECT * FROM movies WHERE id = $id");
+$result = mysqli_query($conn, "
+    SELECT m.*, AVG(r.rating) as avg_rating, COUNT(r.id) as total_reviews
+    FROM movies m
+    LEFT JOIN reviews r ON m.id = r.movie_id
+    WHERE m.id = $id
+");
+
 $movie = mysqli_fetch_assoc($result);
 $reviews = mysqli_query($conn, "
     SELECT * FROM reviews 
@@ -91,7 +95,8 @@ $reviews = mysqli_query($conn, "
             </h1>
 
             <p class="genre"><?= $movie['genre'] ?></p>
-            <p class="rating">⭐ <?= $movie['rating'] ?></p>
+            
+            <p class="rating">⭐ <?= $movie['avg_rating'] ? round($movie['avg_rating'], 1) : 'No ratings yet' ?></p>
 
             <p class="description"><?= $movie['description'] ?></p>
 
@@ -156,7 +161,7 @@ $reviews = mysqli_query($conn, "
 
 </div>
 
-<!-- editor window -->
+<!-- edit modal -->
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeEditModal()">&times;</span>
@@ -200,7 +205,7 @@ $reviews = mysqli_query($conn, "
     </div>
 </div>
 
-<!-- Review Modal -->
+<!-- review modal -->
 <div id="reviewModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeReviewModal()">&times;</span>
@@ -216,7 +221,7 @@ $reviews = mysqli_query($conn, "
 
             <div class="form-group">
                 <label>Review</label>
-                <textarea name="review" class="desc-box" required></textarea>
+                <textarea name="review" class="desc-box"></textarea>
             </div>
 
             <button type="submit" name="submit_review">Submit Review</button>

@@ -1,17 +1,22 @@
 <?php
 session_start();
 include "connection.php";
-$result = mysqli_query($conn, "SELECT * FROM movies");
+
+$result = mysqli_query($conn, "
+    SELECT m.*, AVG(r.rating) as avg_rating
+    FROM movies m
+    LEFT JOIN reviews r ON m.id = r.movie_id
+    GROUP BY m.id
+");
 
 if (isset($_POST['add'])) {
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $year = mysqli_real_escape_string($conn, $_POST['year']);
     $genre = mysqli_real_escape_string($conn, $_POST['genre']);
     $poster = mysqli_real_escape_string($conn, $_POST['poster']);
-    $rating = mysqli_real_escape_string($conn, $_POST['rating']);
 
-    mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster, rating) 
-    VALUES ('$title', '$year', '$genre', '$poster', '$rating')");
+    mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster) 
+    VALUES ('$title', '$year', '$genre', '$poster')");
     header("Location: index.php?added=1");
     exit;
 }
@@ -43,7 +48,6 @@ if (isset($_POST['add'])) {
             <input type="number" name="year" placeholder="Year" min="1901" max="2155" required><br>
             <input type="text" name="genre" placeholder="Genre" required><br>
             <input type="text" name="poster" placeholder="Poster URL" required><br>
-            <input type="number" step="0.1" name="rating" placeholder="Rating" required><br><br>
 
             <button type="submit" name="add">Add</button>
         </form>
@@ -119,7 +123,16 @@ function closeToaster(id) {
         </div>
 
         <div class="genre"><?= $movie['genre'] ?></div>
-        <div>⭐ <?= $movie['rating'] ?></div>
+
+        
+
+        <div>
+            <?php if ($movie['avg_rating']): ?>
+                ⭐ <?= round($movie['avg_rating'], 1) ?>
+            <?php else: ?>
+                No ratings yet
+            <?php endif; ?>
+        </div>
     </a>
 
 <?php endwhile; ?>
