@@ -1,12 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Patua+One&display=swap');
 
-.welcome {
-    text-align: center;
-    /* margin-top: 40px; */
-    font-size: 24px;
-    color: var(--yellow);
-    font-family: 'Oxygen', sans-serif;}
 
+.welcome-text {
+    font-size: 18px;
+    margin: 0;
+    font-family: 'Oxygen', sans-serif;
+    color: white;
+}
+
+.welcome-box {
+    position: fixed;
+    top: 180px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: #1c1c1ce9;
+    padding: 20px 30px;
+    border-radius: 10px;
+
+    width: fit-content;
+    max-width: 300px;
+
+    text-align: center;
+    color: white;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+
+    opacity: 0;
+    transform: translate(-50%, -20px);
+    transition: all 0.4s ease;
+
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.welcome-box.show {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
 
 /* ADDING BUTTON STYLES */
 .add-btn {

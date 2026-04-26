@@ -34,7 +34,7 @@ if (isset($_POST['add'])) {
 
 <div id="addModal" class="modal">
     <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
+        <span class="close" onclick="closeModal('addModal')">&times;</span>
         
         <h2>Add Movie</h2>
         
@@ -50,20 +50,38 @@ if (isset($_POST['add'])) {
     </div>
 </div>
 
+<div id="welcomeBox" class="welcome-box">
+    <h1 class="welcome-text">
+        Welcome, <?= isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest' ?> 👋
+    </h1>
+</div>
+
 <script>
-function openModal() {
-    document.getElementById("addModal").style.display = "block";
+function openModal(id) {
+    document.getElementById(id).style.display = "block";
 }
 
-function closeModal() {
-    document.getElementById("addModal").style.display = "none";
+function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+function openToaster(id) {
+    const el = document.getElementById(id);
+    el.classList.add("show");
+}
+
+function closeToaster(id) {
+    const el = document.getElementById(id);
+    el.classList.remove("show");
 }
 </script>
 
 <body>
 
+
+
 <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-<a href="#" class="add-btn" onclick="openModal()">
+<a href="#" class="add-btn" onclick="openModal('addModal')">
     <svg viewBox="0 0 24 24" width="30" height="30">
         <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round"/>
     </svg>
@@ -85,7 +103,6 @@ function closeModal() {
     </nav>
 </header>
 
-<h1 class="welcome">Hi, <?= isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest' ?></h1>
 
 <div class="container">
 <?php while($movie = mysqli_fetch_assoc($result)): ?>
@@ -121,7 +138,6 @@ Swal.fire({
 
 <?php if (isset($_GET['added'])): ?>
 <script>
-    closeModal();
 Swal.fire({
     title: "Added!",
     text: "Movie has been added.",
@@ -129,6 +145,16 @@ Swal.fire({
     confirmButtonColor: "#3cba54"
 });
 </script>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['just_login'])): ?>
+    <script>
+        openToaster('welcomeBox');
+        setTimeout(() => {
+            closeToaster('welcomeBox');
+        }, 2000);
+    </script>
+    <?php unset($_SESSION['just_login']); ?>
 <?php endif; ?>
 
 </body>

@@ -60,6 +60,11 @@ body {
     margin-top: 80px;
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
+
 
 /* INDEX PAGE STYLES */
 
@@ -76,7 +81,9 @@ h1 {
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
+
 }
+
 
 .film-card {
     width: 200px;
@@ -144,6 +151,7 @@ h1 {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.7);
+    border-radius: 10px;
 }
 
 .modal-content {
