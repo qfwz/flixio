@@ -12,7 +12,7 @@
     height: 60px;
     border-radius: 20px;
 
-    background: #ff3c3c;
+    background: var(--red);
     color: white;
     font-size: 18px;
     font-style: bold;
@@ -31,6 +31,6 @@
 }
 
 .add-btn:hover {
-    background: #ff1f1f;
+    background: var(--red);
     transform: scale(1.1);
 }

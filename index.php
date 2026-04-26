@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "connection.php";
 $result = mysqli_query($conn, "SELECT * FROM movies");
 
@@ -61,12 +62,14 @@ function closeModal() {
 
 <body>
 
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
 <a href="#" class="add-btn" onclick="openModal()">
     <svg viewBox="0 0 24 24" width="30" height="30">
         <path d="M12 5v14M5 12h14" stroke="white" stroke-width="2" stroke-linecap="round"/>
     </svg>
     <span>Add Movie </span>
 </a>
+<?php endif; ?>
 
 
 <header class="header">

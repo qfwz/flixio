@@ -26,7 +26,7 @@
 }
 
 .detail-info h1 {
-    color: #ffeb52;
+    color: var(--yellow);
     margin-bottom: 10px;
     text-align: left;
     display: flex;
@@ -49,4 +49,34 @@
     margin-top: 20px;
     line-height: 1.5;
     color: #ddd;
+}
+
+/* Review Section */
+.review-section {
+    margin-top: 64px;
+}
+
+.review-section h2 {
+    color: var(--yellow);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.review-card {
+    background: #1c1c1c;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.review-header {
+    display: flex;
+    justify-content: left;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.review-text {
+    color: #ddd;
+    margin-bottom: 5px;
 }

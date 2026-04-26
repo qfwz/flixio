@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include "connection.php";
 
 $id = intval($_GET['id']);
@@ -26,9 +27,29 @@ if (isset($_POST['update'])) {
     $updated = true;
 }
 
+// REVIEW
+
+if (isset($_POST['submit_review'])) {
+    $movie_id = $_POST['movie_id'];
+    $rating = $_POST['rating'];
+    $review = $_POST['review'];
+    $username = $_SESSION['username'];
+
+    mysqli_query($conn, "INSERT INTO reviews (movie_id, username, rating, review)
+    VALUES ('$movie_id', '$username', '$rating', '$review')");
+
+    header("Location: detail.php?id=$movie_id&review_added=1");
+    exit;
+}
+
 /* ambil data terbaru*/
 $result = mysqli_query($conn, "SELECT * FROM movies WHERE id = $id");
 $movie = mysqli_fetch_assoc($result);
+$reviews = mysqli_query($conn, "
+    SELECT * FROM reviews 
+    WHERE movie_id = $id 
+    ORDER BY created_at DESC
+");
 ?>
 
 <!DOCTYPE html>
@@ -75,10 +96,60 @@ $movie = mysqli_fetch_assoc($result);
             <p class="description"><?= $movie['description'] ?></p>
 
             <div class="action-group">
-                <button class="yellow-btn" onclick="openEditModal()">Edit details</button>
-                <button class="red-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">Delete this movie</button>
+                    <button class="yellow-btn" onclick="openReviewModal()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
+                            <path d="M12 17l-5 3 1-6-4-4 6-.5L12 4l2 5.5 6 .5-4 4 1 6z"
+                            fill="black"/>
+                        </svg>
+                        Add rating & review
+                    </button>
+
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
+
+                    <button class="yellow-btn" onclick="openEditModal()">
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
+                            <path d="M4 20h4l10-10-4-4L4 16v4zM14 6l4 4"
+                            stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                        Edit details
+                    </button>
+
+                    <button class="red-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">
+                        <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
+                            <path d="M3 6h18M9 6v12m6-12v12M5 6l1 14h12l1-14M10 6V4h4v2"
+                            stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+                        </svg>
+                        Delete this movie
+                    </button>
+                <?php endif; ?>
             </div>
         </div>
+    </div>
+
+    <div class="review-section">
+        <h2>Reviews</h2>
+
+        <?php if (mysqli_num_rows($reviews) > 0): ?>
+            
+            <?php while($r = mysqli_fetch_assoc($reviews)): ?>
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong><?= $r['username'] ?></strong>
+                        <span> ⭐<?= $r['rating'] ?></span>
+                        <?php if (isset($_SESSION['username']) && $_SESSION['username'] == $r['username']): ?>
+                            <span style="font-size: 12px; color: var(--yellow); margin-left: 4px;">(You)</span>
+                        <?php endif; ?>
+
+                    </div>
+
+                    <p class="review-text"><?= $r['review'] ?></p>
+                    <small><?= date("d M Y", strtotime($r['created_at'])) ?></small>
+                </div>
+            <?php endwhile; ?>
+
+        <?php else: ?>
+            <p>No reviews yet. Be the first to review this movie!</p>
+        <?php endif; ?>
     </div>
 
     <a href="index.php" class="back-btn">← Back</a>
@@ -129,6 +200,30 @@ $movie = mysqli_fetch_assoc($result);
     </div>
 </div>
 
+<!-- Review Modal -->
+<div id="reviewModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeReviewModal()">&times;</span>
+
+        <h2>Add Review</h2>
+
+        <form method="POST">
+            <input type="hidden" name="movie_id" value="<?= $movie['id'] ?>">
+            <div class="form-group">
+                <label>Rating</label>
+                <input type="number" step="0.1" name="rating" min="0" max="10" required>
+            </div>
+
+            <div class="form-group">
+                <label>Review</label>
+                <textarea name="review" class="desc-box" required></textarea>
+            </div>
+
+            <button type="submit" name="submit_review">Submit Review</button>
+        </form>
+    </div>
+</div>
+
 <!-- action scripts -->
 <script>
 function openEditModal() {
@@ -137,6 +232,14 @@ function openEditModal() {
 
 function closeEditModal() {
     document.getElementById("editModal").style.display = "none";
+}
+
+function openReviewModal() {
+    document.getElementById("reviewModal").style.display = "block";
+}
+
+function closeReviewModal() {
+    document.getElementById("reviewModal").style.display = "none";
 }
 
 function confirmDelete(id) {
@@ -166,9 +269,23 @@ Swal.fire({
     icon: "success",
     confirmButtonColor: "#ff3c3c"
 });
-
 </script>
 <?php endif; ?>
+
+<?php if (isset($_GET['review_added'])): ?>
+<script>
+Swal.fire({
+    title: "Rating & review added!",
+    text: "Thank you for contributing to the community 😃",
+    icon: "success",
+    confirmButtonColor: "#ff3c3c"
+});
+</script>
+<?php endif; ?>
+
+
+
+
 
 </body>
 </html>
