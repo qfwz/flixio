@@ -73,7 +73,7 @@ $reviews = mysqli_query($conn, "
         <a href="index.php">Home</a>
         <a href="#">Movies</a>
         <a href="#">Genre</a>
-        <a href="#">About</a>
+        <a href="account.php">Account</a>
     </nav>
 </header>
 
@@ -126,6 +126,8 @@ $reviews = mysqli_query($conn, "
         </div>
     </div>
 
+    <a href="index.php" class="back-btn">← Back</a>
+
     <div class="review-section">
         <h2>Reviews</h2>
 
@@ -151,8 +153,6 @@ $reviews = mysqli_query($conn, "
             <p>No reviews yet. Be the first to review this movie!</p>
         <?php endif; ?>
     </div>
-
-    <a href="index.php" class="back-btn">← Back</a>
 
 </div>
 

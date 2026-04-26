@@ -81,9 +81,11 @@ function closeModal() {
         <a href="#">Home</a>
         <a href="#">Movies</a>
         <a href="#">Genre</a>
-        <a href="#">About</a>
+        <a href="account.php">Account</a>
     </nav>
 </header>
+
+<h1 class="welcome">Hi, <?= isset($_SESSION['username']) ? $_SESSION['username'] : 'Guest' ?></h1>
 
 <div class="container">
 <?php while($movie = mysqli_fetch_assoc($result)): ?>
