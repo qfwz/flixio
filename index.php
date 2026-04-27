@@ -10,13 +10,26 @@ $result = mysqli_query($conn, "
 ");
 
 if (isset($_POST['add'])) {
+
+    if ($_SESSION['role'] !== 'admin') {
+        header("Location: index.php?error=1");
+        exit;
+    }
+
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $year = mysqli_real_escape_string($conn, $_POST['year']);
     $genre = mysqli_real_escape_string($conn, $_POST['genre']);
     $poster = mysqli_real_escape_string($conn, $_POST['poster']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
+    if (empty($poster)) {
+        $poster = "https://via.placeholder.com/300x450?text=No+Image";
+    }
+    if (empty($description)) {
+        $description = "No description.";
+    }
 
-    mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster) 
-    VALUES ('$title', '$year', '$genre', '$poster')");
+    mysqli_query($conn, "INSERT INTO movies (title, year, genre, poster, description) 
+    VALUES ('$title', '$year', '$genre', '$poster', '$description')");
     header("Location: index.php?added=1");
     exit;
 }
@@ -41,13 +54,34 @@ if (isset($_POST['add'])) {
     <div class="modal-content">
         <span class="close" onclick="closeModal('addModal')">&times;</span>
         
-        <h2>Add Movie</h2>
+        <h2 class="modal-title">Add Movie</h2>
         
         <form method="POST" action="">
-            <input type="text" name="title" placeholder="Title" required><br>
-            <input type="number" name="year" placeholder="Year" min="1901" max="2155" required><br>
-            <input type="text" name="genre" placeholder="Genre" required><br>
-            <input type="text" name="poster" placeholder="Poster URL" required><br>
+
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Year</label>
+                <input type="number" name="year" required>
+            </div>
+
+            <div class="form-group">
+                <label>Genre</label>
+                <input type="text" name="genre" required>
+            </div>
+
+            <div class="form-group">
+                <label>Poster</label>
+                <input type="text" name="poster">
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="desc-box"></textarea>
+            </div>
 
             <button type="submit" name="add">Add</button>
         </form>
@@ -128,7 +162,7 @@ function closeToaster(id) {
 
         <div>
             <?php if ($movie['avg_rating']): ?>
-                ⭐ <?= round($movie['avg_rating'], 1) ?>
+                <span style="color: var(--yellow);">★</span> <?= round($movie['avg_rating'], 1) ?>
             <?php else: ?>
                 No ratings yet
             <?php endif; ?>
@@ -159,6 +193,18 @@ Swal.fire({
 });
 </script>
 <?php endif; ?>
+
+<?php if (isset($_GET['error'])): ?>
+<script>
+Swal.fire({
+    title: "Error",
+    text: "You don't have permission to perform this action.",
+    icon: "error",
+    confirmButtonColor: "#ff3c3c"
+});
+</script>
+<?php endif; ?>
+
 
 <?php if (isset($_SESSION['just_login'])): ?>
     <script>

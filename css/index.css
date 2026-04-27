@@ -2,7 +2,7 @@
 
 
 .welcome-text {
-    font-size: 18px;
+    font-size: 12px;
     margin: 0;
     font-family: 'Oxygen', sans-serif;
     color: white;
@@ -51,7 +51,7 @@
 
     width: max-content;
     height: 60px;
-    border-radius: 20px;
+    border-radius: 100px;
 
     background: var(--red);
     color: white;

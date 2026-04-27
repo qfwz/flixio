@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&family=Patua+One&display=swap');
 
 :root {
-    --red: #ff3c3c;
+    --red: #980000;
     --yellow: #ffd951;
 }
 
@@ -81,7 +81,7 @@ h1 {
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-
+    margin-bottom: 100px;
 }
 
 
@@ -122,14 +122,14 @@ h1 {
 }
 
 .judul {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     color: #ddd;
     text-align: center;
 }
 
 .tahun {
-    font-size: 12px;
+    font-size: 14px;
     color: #aaa;
     margin-left: 2px;
 }
@@ -151,15 +151,23 @@ h1 {
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.7);
-    border-radius: 10px;
+    border-radius: 12px;
+
+}
+
+.modal-title {
+    color: white;
+    margin-bottom: 20px;
+    text-align: left;
+    font-family: 'Oxygen', sans-serif;
 }
 
 .modal-content {
     background: #1c1c1c;
     margin: 10% auto;
     padding: 20px;
-    width: 600px;
-    border-radius: 10px;
+    width: 300px;
+    border-radius: 12px;
     color: white;
 }
 
@@ -187,7 +195,7 @@ h1 {
 }
 
 .modal textarea {
-    min-height: 100px;
+    min-height: 200px;
     resize: none;
 }
 
@@ -245,10 +253,15 @@ h1 {
 /* ACTION GROUPING (EDIT & DELETE) */
 .action-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     margin-top: auto;
     width: max-content;
     flex-direction: column;
+}
+
+.action-group button {
+    width: 100%;
+    border-radius: 100px;
 }
 
 /* RED BUTTON */
@@ -261,10 +274,13 @@ h1 {
     border-radius: 5px;
     width: auto;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .red-btn:hover {
-    background: var(--red);
+    background: #ff1f1f;
 }
 
 /* YELLOW BUTTON */
@@ -272,7 +288,11 @@ h1 {
     margin-top: 10px; padding: 10px 20px;
     background: var(--yellow);
     border: none; cursor: pointer;
-    border-radius: 5px; width:auto; }
+    border-radius: 5px; width:auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
     
 .yellow-btn:hover {
     background: #ffd000; 

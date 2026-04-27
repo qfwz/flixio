@@ -28,9 +28,9 @@ if (isset($_POST['update'])) {
 // REVIEW
 
 if (isset($_POST['submit_review'])) {
-    $movie_id = $_POST['movie_id'];
-    $rating = $_POST['rating'];
-    $review = $_POST['review'];
+    $movie_id = intval($_POST['movie_id']);
+    $rating = floatval($_POST['rating']);
+    $review = mysqli_real_escape_string($conn, $_POST['review'] ?? '');
     $username = $_SESSION['username'];
 
     mysqli_query($conn, "INSERT INTO reviews (movie_id, username, rating, review)
@@ -46,6 +46,7 @@ $result = mysqli_query($conn, "
     FROM movies m
     LEFT JOIN reviews r ON m.id = r.movie_id
     WHERE m.id = $id
+    GROUP BY m.id
 ");
 
 $movie = mysqli_fetch_assoc($result);
@@ -95,28 +96,39 @@ $reviews = mysqli_query($conn, "
             </h1>
 
             <p class="genre"><?= $movie['genre'] ?></p>
-            
-            <p class="rating">⭐ <?= $movie['avg_rating'] ? round($movie['avg_rating'], 1) : 'No ratings yet' ?></p>
+
+            <p class="rating">
+                <?php if ($movie['avg_rating']): ?>
+                    <span style="color: white;"> <span style="color: var(--yellow);">★</span> <?= round($movie['avg_rating'], 1) ?></span>
+                    <small >(<?= $movie['total_reviews'] ?> ratings)</small>
+                <?php else: ?>
+                    <span >No ratings yet</span>
+                <?php endif; ?>
+            </p>
 
             <p class="description"><?= $movie['description'] ?></p>
 
             <div class="action-group">
+                <div>
                     <button class="yellow-btn" onclick="openReviewModal()">
                         <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
                             <path d="M12 17l-5 3 1-6-4-4 6-.5L12 4l2 5.5 6 .5-4 4 1 6z"
                             fill="black"/>
                         </svg>
-                        Add rating & review
+                        Rate & review
                     </button>
+                </div>
+
 
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin'): ?>
-
+                
+                <div>
                     <button class="yellow-btn" onclick="openEditModal()">
                         <svg viewBox="0 0 24 24" width="16" height="16" style="vertical-align: middle;">
                             <path d="M4 20h4l10-10-4-4L4 16v4zM14 6l4 4"
                             stroke="black" stroke-width="2" fill="none" stroke-linecap="round"/>
                         </svg>
-                        Edit details
+                        Edit info
                     </button>
 
                     <button class="red-btn" onclick="confirmDelete(<?= $movie['id'] ?>)">
@@ -124,14 +136,16 @@ $reviews = mysqli_query($conn, "
                             <path d="M3 6h18M9 6v12m6-12v12M5 6l1 14h12l1-14M10 6V4h4v2"
                             stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
                         </svg>
-                        Delete this movie
+                        Delete from database
                     </button>
+                </div>
+                    
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <a href="index.php" class="back-btn">← Back</a>
+    <!-- <a href="index.php" class="back-btn">← Back</a> -->
 
     <div class="review-section">
         <h2>Reviews</h2>
@@ -140,16 +154,29 @@ $reviews = mysqli_query($conn, "
             
             <?php while($r = mysqli_fetch_assoc($reviews)): ?>
                 <div class="review-card">
+                    <?php for ($i = 0; $i < 10; $i++): ?>
+                        <?php if ($i < floor($r['rating'])): ?>
+                            <span style="color: var(--yellow);">★</span>
+                        <?php else: ?>
+                            <?php if ($i == 0):
+                                break;
+                            endif; ?>
+                            <span style="color: #555;">★</span>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+
                     <div class="review-header">
                         <strong><?= $r['username'] ?></strong>
-                        <span> ⭐<?= $r['rating'] ?></span>
+                        
                         <?php if (isset($_SESSION['username']) && $_SESSION['username'] == $r['username']): ?>
                             <span style="font-size: 12px; color: var(--yellow); margin-left: 4px;">(You)</span>
                         <?php endif; ?>
 
                     </div>
 
-                    <p class="review-text"><?= $r['review'] ?></p>
+                    <?php if (!empty($r['review'])): ?>
+                        <p class="review-text"><?= $r['review'] ?></p>
+                    <?php endif; ?>
                     <small><?= date("d M Y", strtotime($r['created_at'])) ?></small>
                 </div>
             <?php endwhile; ?>
@@ -166,7 +193,7 @@ $reviews = mysqli_query($conn, "
     <div class="modal-content">
         <span class="close" onclick="closeEditModal()">&times;</span>
 
-        <h2>Edit Movie</h2>
+        <h2 class="modal-title">Edit Movie Details</h2>
 
         <form method="POST">
 
@@ -191,11 +218,6 @@ $reviews = mysqli_query($conn, "
             </div>
 
             <div class="form-group">
-                <label>Rating</label>
-                <input type="number" step="0.1" name="rating" value="<?= $movie['rating'] ?>" required>
-            </div>
-
-            <div class="form-group">
                 <label>Description</label>
                 <textarea name="description" class="desc-box" required><?= $movie['description'] ?></textarea>
             </div>
@@ -210,13 +232,13 @@ $reviews = mysqli_query($conn, "
     <div class="modal-content">
         <span class="close" onclick="closeReviewModal()">&times;</span>
 
-        <h2>Add Review</h2>
+        <h2>Rate & review</h2>
 
         <form method="POST">
             <input type="hidden" name="movie_id" value="<?= $movie['id'] ?>">
             <div class="form-group">
                 <label>Rating</label>
-                <input type="number" step="0.1" name="rating" min="0" max="10" required>
+                <input type="number" step="1" name="rating" min="0" max="10">
             </div>
 
             <div class="form-group">
@@ -224,7 +246,7 @@ $reviews = mysqli_query($conn, "
                 <textarea name="review" class="desc-box"></textarea>
             </div>
 
-            <button type="submit" name="submit_review">Submit Review</button>
+            <button type="submit" name="submit_review">Submit</button>
         </form>
     </div>
 </div>

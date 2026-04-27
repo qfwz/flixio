@@ -31,8 +31,17 @@ include "connection.php";
     </nav>
 </header>
 
+<div class="container">
+    <h1>Account Details</h1>
 
+    <div class="account-info">
+        <p> <?= $_SESSION['username'] ?></p>
 
+    </div>
+
+    <a href="logout.php" class="logout-button">Logout</a>
+
+</div>
 
 
 
