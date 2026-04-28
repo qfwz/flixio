@@ -7,12 +7,12 @@ Simple movie web app built with PHP & MySQL. A work in progress; currently addin
 3. Access http://localhost:8080
 
 ## Default Users
-Admin:
-- username: admin
-- password: admin123
-User:
-- username: user
-- password: user123
+- Admin:
+username: admin
+password: admin123
+- User:
+username: user
+password: user123
 (passwords are hashed in database)
 
 ## Features
@@ -37,3 +37,4 @@ User:
 - MySQL
 - CSS
 - JavaScript
+- Docker
