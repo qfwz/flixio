@@ -16,7 +16,7 @@ if ($user && password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];
     $_SESSION['just_login'] = true;
 
-    header("Location: index.php");
+    header("Location: dashboard.php");
     exit;
 
 } else {
