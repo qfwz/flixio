@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include "connection.php";
@@ -50,6 +49,8 @@ if (isset($_POST['add'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
+
+<body>
 
 <div id="addModal" class="modal">
     <div class="modal-content">
@@ -115,7 +116,6 @@ function closeToaster(id) {
 }
 </script>
 
-<body>
 
 
 
