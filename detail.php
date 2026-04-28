@@ -7,6 +7,12 @@ $updated = false;
 
 // EDIT
 if (isset($_POST['update'])) {
+
+    if ($_SESSION['role'] !== 'admin') {
+        header("Location: dashboard.php?error=1");
+        exit;
+    }
+    
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $year = mysqli_real_escape_string($conn, $_POST['year']);
     $genre = mysqli_real_escape_string($conn, $_POST['genre']);
@@ -75,9 +81,9 @@ $reviews = mysqli_query($conn, "
     </div>
 
     <nav class="nav">
-        <a href="index.php">Home</a>
-        <a href="#">Movies</a>
-        <a href="#">Genre</a>
+        <a href="dashboard.php">Home</a>
+        <a href="dashboard.php">Movies</a>
+        <a href="dashboard.php">Genre</a>
         <a href="account.php">Account</a>
     </nav>
 </header>

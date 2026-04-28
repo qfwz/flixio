@@ -24,9 +24,9 @@ include "connection.php";
     </div>
 
     <nav class="nav">
-        <a href="index.php">Home</a>
-        <a href="#">Movies</a>
-        <a href="#">Genre</a>
+        <a href="dashboard.php">Home</a>
+        <a href="dashboard.php">Movies</a>
+        <a href="dashboard.php">Genre</a>
         <a href="account.php">Account</a>
     </nav>
 </header>
