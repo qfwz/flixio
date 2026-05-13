@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include "connection.php";
+include __DIR__ . '/../config/connection.php';
 
 $id = intval($_GET['id']);
 $updated = false;
@@ -61,32 +61,21 @@ $reviews = mysqli_query($conn, "
     WHERE movie_id = $id 
     ORDER BY created_at DESC
 ");
+
+$pageTitle = $movie['title'] . " - Flixio";
+include __DIR__ . '/../includes/header.php';
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/detail.css">
-    <title><?= $movie['title'] ?> - Flixio</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/detail.css">
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-
-<header class="header">
-    <div class="logo">
-        <span class="flix">Flix</span><span class="io">io</span>
-    </div>
-
-    <nav class="nav">
-        <a href="dashboard.php">Home</a>
-        <a href="dashboard.php">Movies</a>
-        <a href="dashboard.php">Genre</a>
-        <a href="account.php">Account</a>
-    </nav>
-</header>
 
 <div class="detail-container">
 
@@ -286,7 +275,7 @@ function confirmDelete(id) {
         confirmButtonText: "Yes"
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "delete.php?id=" + id;
+            window.location.href = "../auth/delete_movie.php?id=" + id;
         }
     });
 }

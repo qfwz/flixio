@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "connection.php";
+include __DIR__ . '/../config/connection.php';
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -16,7 +16,7 @@ if ($user && password_verify($password, $user['password'])) {
     $_SESSION['role'] = $user['role'];
     $_SESSION['just_login'] = true;
 
-    header("Location: dashboard.php");
+    header("Location: ../pages/dashboard.php");
     exit;
 
 } else {

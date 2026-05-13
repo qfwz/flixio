@@ -1,6 +1,8 @@
 <?php
 session_start();
-include "connection.php";
+$pageTitle = "Dashboard - Flixio";
+include __DIR__ . '/../config/connection.php';
+include __DIR__ . '/../includes/header.php';
 
 $result = mysqli_query($conn, "
     SELECT m.*, AVG(r.rating) as avg_rating
@@ -42,8 +44,8 @@ if (isset($_POST['add'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
     <title>Flixio</title>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -127,20 +129,6 @@ function closeToaster(id) {
     <span>Add Movie </span>
 </a>
 <?php endif; ?>
-
-
-<header class="header">
-    <div class="logo">
-        <span class="flix">Flix</span><span class="io">io</span>
-    </div>
-
-    <nav class="nav">
-        <a href="dashboard.php">Home</a>
-        <a href="dashboard.php">Movies</a>
-        <a href="dashboard.php">Genre</a>
-        <a href="account.php">Account</a>
-    </nav>
-</header>
 
 
 <div class="container">

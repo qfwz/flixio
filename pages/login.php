@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - Flixio</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 
 
@@ -20,7 +20,7 @@
     <div class="login-box">
         <h2>Login</h2>
 
-        <form action="login_process.php" method="POST">
+        <form action="../auth/login_process.php" method="POST">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
 
